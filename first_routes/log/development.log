@@ -607,3 +607,89 @@ Migrating to CreateUsers (20220111211738)
   [1m[36mUser Create (0.8ms)[0m  [1m[32mINSERT INTO "users" ("name", "email") VALUES ($1, $2) RETURNING "id"[0m  [["name", "Ben"], ["email", "ben@email.com"]]
   [1m[35m (37.0ms)[0m  [1m[35mCOMMIT[0m
   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" LIMIT $1[0m  [["LIMIT", 11]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(7974280239715595190)[0m
+  ↳ bin/rails:9
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Migrating to CreateUsers (20220111211738)
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (21.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "name" character varying NOT NULL, "email" character varying NOT NULL)[0m
+  ↳ db/migrate/20220111211738_create_users.rb:3
+  [1m[36mActiveRecord::SchemaMigration Create (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20220111211738"]]
+  ↳ bin/rails:9
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[36mActiveRecord::InternalMetadata Load (1.1ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ bin/rails:9
+  [1m[35m (0.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(7974280239715595190)[0m
+  ↳ bin/rails:9
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ bin/rails:9
+Started GET "/users/1" for ::1 at 2022-01-11 17:05:49 -0500
+  [1m[35m (1.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  ↳ /Users/yaakovzaetz/.rbenv/versions/2.5.1/lib/ruby/gems/2.5.0/gems/activerecord-5.2.6/lib/active_record/log_subscriber.rb:98
+Processing by UsersController#show as */*
+  Parameters: {"id"=>"1"}
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/users/1" for ::1 at 2022-01-11 17:06:39 -0500
+Processing by UsersController#show as */*
+  Parameters: {"id"=>"1"}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms)
+
+
+  
+NoMethodError (undefined method `find' for nil:NilClass):
+  
+app/controllers/users_controller.rb:11:in `show'
+Started GET "/users" for ::1 at 2022-01-11 17:08:14 -0500
+Processing by UsersController#index as */*
+Completed 500 Internal Server Error in 107ms (ActiveRecord: 0.0ms)
+
+
+  
+NameError (undefined local variable or method `users' for #<UsersController:0x00007fd43cfb5d48>
+Did you mean?  user_url):
+  
+app/controllers/users_controller.rb:4:in `index'
+Started GET "/users" for ::1 at 2022-01-11 17:09:12 -0500
+Processing by UsersController#index as */*
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:4
+Completed 200 OK in 39ms (Views: 8.4ms | ActiveRecord: 27.4ms)
+
+
+Started GET "/users" for ::1 at 2022-01-11 17:11:36 -0500
+Processing by UsersController#index as */*
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  ↳ app/controllers/users_controller.rb:4
+Completed 200 OK in 28ms (Views: 7.4ms | ActiveRecord: 19.2ms)
+
+
+Started POST "/users" for ::1 at 2022-01-11 17:12:37 -0500
+Processing by UsersController#create as */*
+  Parameters: {"name"=>"yaakov", "email"=>"yaakov@email.com"}
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms)
+
+
+  
+ArgumentError (wrong number of arguments (given 2, expected 1)):
+  
+app/controllers/users_controller.rb:21:in `create'
+Started POST "/users" for ::1 at 2022-01-11 17:13:06 -0500
+  
+SyntaxError (/Users/yaakovzaetz/Desktop/repo_classwork/W6D2/first_routes/app/controllers/users_controller.rb:21: syntax error, unexpected ':', expecting ')'
+...User.new(params.require(:name :email).permit(:user_attribute...
+...                              ^
+/Users/yaakovzaetz/Desktop/repo_classwork/W6D2/first_routes/app/controllers/users_controller.rb:21: syntax error, unexpected ')', expecting keyword_end
+....permit(:user_attributes_here))
+...                              ^):
+  
+app/controllers/users_controller.rb:21: syntax error, unexpected ':', expecting ')'
+app/controllers/users_controller.rb:21: syntax error, unexpected ')', expecting keyword_end
