@@ -8,11 +8,11 @@ class UsersController < ApplicationController
     end 
 
     def show
-        user = @users.find(params[:id])
-        if @users 
-            render json: user
-        else
-            
-
+        # user = @users.find(params[:id])
+        # if @users 
+        #     render json: user
+        # else
+            render json: params
+        # end
     end
 end
