@@ -18,9 +18,16 @@ class UsersController < ApplicationController
     end
 
     def create
-        user = User.new(params.require(:name).permit(:user_attributes_here))
+        user = User.new(params.require(:user).permit(:name, :email))
         # replace the `user_attributes_here` with the actual attribute keys
         user.save!
         render json: user
     end
+
+    # private
+
+    # def registration_params
+    #     params.require(:name)
+    #     params.require(:email)
+    # end
 end
